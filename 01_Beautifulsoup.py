@@ -1,14 +1,28 @@
 """
-using beautifulsoup to extract only the h1 headers
+using beautifulsoup to extract the title
 """
 
 from urllib.request import urlopen
+from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 
-html = urlopen("http://www.pythonscraping.com/pages/page1.html")
-bsObj = BeautifulSoup(html.read())
 
-print(bsObj.h1)
-# bsObj.html.body.h1
-# bsObj.body.h1
-# bsObj.html.h1
+def getTitle(url):
+    try:
+        html = urlopen(url)
+    except HTTPError as e:
+        return None
+    try:
+        bsObj = BeautifulSoup(html.read())
+        title = bsObj.h1
+    except AttributeError as e:
+        return None
+    return title
+
+
+title = getTitle("http://www.pythonscraping.com/pages/page1.html")
+
+if title is None:
+    print("Title could not be found")
+else:
+    print(title)
