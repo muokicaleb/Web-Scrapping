@@ -8,6 +8,7 @@ html = urlopen("http://www.pythonscraping.com/pages/warandpeace.html")
 
 bsObj = BeautifulSoup(html)
 
+# bsObj.findAll(tagName, tagAttributes)
 nameList = bsObj.findAll("span", {"class": "green"})
 for name in nameList:
     print(name.get_text())
